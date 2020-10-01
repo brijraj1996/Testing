@@ -22,15 +22,15 @@
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
+            <div class="container mx-auto">
+                <div class="flex justify-between items-center py-4">
+            <h1>
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    <img src="/images/logo.png" width="100" height="100">
+                    {{ config('app.name', 'Testdemo') }}
                 </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            </h1>
+                <div>
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
 
@@ -70,9 +70,10 @@
                     </ul>
                 </div>
             </div>
+            </div>
         </nav>
 
-        <main class="py-4">
+        <main class="container mx-auto py-4">
             @yield('content')
         </main>
     </div>

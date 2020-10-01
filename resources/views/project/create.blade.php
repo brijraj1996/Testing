@@ -1,16 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Create Project</title>
-    <link rel="stylesheet" type="text/css" href="https://cdjns.cloudflare.com/ajax/libs/bulma/0.7.2/css/bulma.css">
-</head>
+@extends('layouts.app')
+@section('content')
 <body>
     <h1>Create project</h1>
     
-    <form method="POST" action="/projects" class="container" style="padding-top:40px">
+    <form method="POST" action="/projects"style="padding-top:40px">
         @csrf
 
         <div class="field">
@@ -28,10 +21,14 @@
         <div class="field">
 
             <label class="control">
-                <button type="submit" class="button-is-link">Create Project</button>
+                <button type="submit" class="button-is-link">Create Project</button><br>
+                <br>
+                <a href="/projects">Cancel</a>
         </div>
 
         
     </form>
 </body>
 </html>
+
+@stop

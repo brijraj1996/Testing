@@ -21,10 +21,10 @@ use Illuminate\Support\Facades\Auth;
 Route::group(['middleware'=>'auth'],function () {
 
     Route::post('/projects','ProjectsController@store');
-    Route::post('/projects/create','ProjectsController@create');
+    Route::get('/projects/create','ProjectsController@create');
     Route::get('/projects/{project}','ProjectsController@show');
     Route::get('/projects','ProjectsController@index');
-    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/home','HomeController@index')->name('home');
 
 });
 
