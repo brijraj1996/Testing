@@ -1,3 +1,5 @@
+@extends('layouts.app')
+@section('content')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +9,10 @@
     <title>Document</title>
 </head>
 <body>
-    <h2>TestDemo</h2>
+    <div style="display: flex; align-items:center;" >
+        
+        <a href="/projects/create">Create new project</a>
+    </div>
     <ul>
         @foreach($projects as $project)
     <li>
@@ -18,3 +23,5 @@
     @endforeach
 </body>
 </html>
+
+@stop
