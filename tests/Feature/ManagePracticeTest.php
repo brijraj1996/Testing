@@ -32,7 +32,7 @@ class PracticeTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->actingAs(factory('App\User')->create());
+        $this->signIn();
 
         $this->get('/projects/create')->assertStatus(200);
 
@@ -51,7 +51,7 @@ class PracticeTest extends TestCase
     /** @test */
     public function a_user_can_view_their_project()
     {
-        $this->be(factory('App\User')->create());
+        $this->signIn();
 
         $this->withoutExceptionHandling();
         
@@ -66,7 +66,8 @@ class PracticeTest extends TestCase
      /** @test */
      public function an_authenticated_user_cannot_view_the_projects_of_others()
      {
-        $this->be(factory('App\User')->create());
+        // $this->be(factory('App\User')->create());
+        $this->signIn();
         
 
         // $this->withoutExceptionHandling();
@@ -81,7 +82,7 @@ class PracticeTest extends TestCase
     /** @test */
     public function check_the_title()
     {
-        $this->actingAs(factory('App\User')->create());
+       $this->signIn();
         $attributes =factory('App\Project')->raw(['title'=>'']);
         $this->post('/projects',$attributes)->assertSessionHasErrors('title');
     }
@@ -89,15 +90,11 @@ class PracticeTest extends TestCase
     /** @test */
     public function check_the_description()
     {
-        $this->actingAs(factory('App\User')->create());
+        $this->signIn();
         $attributes=factory('App\Project')->raw(['description'=>'']);
         $this->post('/projects',$attributes)->assertSessionHasErrors('description');
     }
 
 
-    public function it_belongs_to_an_owner()
-    {
-        $project= factory('App\Project')->create();
-        $this->assertInstanceOf('App\User', $project->owner);
-    }
+   
 }
