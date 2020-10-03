@@ -10,12 +10,6 @@ class PracticeTest extends TestCase
 {
     use WithFaker,RefreshDatabase;
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-
      /** @test */
     public function guests_cannot_create_project()
     {
@@ -40,7 +34,7 @@ class PracticeTest extends TestCase
         $this->get($project->path())->assertRedirect('login');
     }
 
-
+    /** @test */
     public function testExample()
     {
         $this->withoutExceptionHandling();
@@ -105,7 +99,7 @@ class PracticeTest extends TestCase
         $this->post('/projects',$attributes)->assertSessionHasErrors('description');
     }
 
-
+    /** @test */
     public function it_belongs_to_an_owner()
     {
         $project= factory('App\Project')->create();
