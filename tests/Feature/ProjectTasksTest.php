@@ -6,6 +6,10 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Project;
+// use Facades\Tests\Setup\ProjFactory;
+use Tests\Setup\ProjFactory;
+use phpDocumentor\Reflection\ProjectFactory;
+use ProjFactory as GlobalProjFactory;
 
 class ProjectTasksTest extends TestCase
 {
@@ -23,6 +27,7 @@ class ProjectTasksTest extends TestCase
     {
     
         $this->signIn(); //we get a signed in user
+        // $project= ProjFactory::withTasks(1)->create();
         $project= factory('App\Project')->create(); //we get a project created by somebody who is not a signed in user.
         $this->post($project->path() .'/tasks', ['body' => 'Test Task'])
             ->assertStatus(403);
@@ -48,7 +53,7 @@ class ProjectTasksTest extends TestCase
     public function only_owner_of_a_project_may_update_a_task()
     {
     
-        $this->signIn(); //we get a signed in user
+        $this->signIn(); //we get a signed in use
         $project= factory('App\Project')->create(); //we get a project created by somebody who is not a signed in user.
         $task = $project->addTask('Test Task');
         $this->patch($task->path(), ['body' => 'changed'])
@@ -61,17 +66,24 @@ class ProjectTasksTest extends TestCase
     /** @test */
     public function a_task_can_be_updated()
     {
-        $this->withoutExceptionHandling();
+        
+
+        $project= app(ProjFactory::class)
+        ->withTasks(1)
+        ->create();
+
         $this->signIn();
 
         // $project= factory(Project::class)->create(['owner_id'=> auth()->id()]);
-        $project =auth()->user()->projects()->create(
-            factory(Project::class)->raw()
-        );
+        //                        OR
+        // $project =auth()->user()->projects()->create(
+        //     factory(Project::class)->raw()
+        // );
 
-        $task= $project->addTask('test task');
+        // $task= $project->addTask('test task');
 
-        $this->patch($project->path() . '/tasks/' . $task->id,[
+        $this->actingAs($project->owner)
+        ->patch($project->tasks[0]->path(),[
             'body' => 'changed',
             'completed' => true
         ]);

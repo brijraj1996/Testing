@@ -3,7 +3,7 @@
 <body>
     <h1>Create project</h1>
     
-    <form method="POST" action="/projects"style="padding-top:40px">
+    <form method="POST" action="/projects"style="lg:w-1/2 lg:mx-auto bg-white p-6 md:py-12 md:px-16 rounded shadow">
         @csrf
 
         <div class="field">

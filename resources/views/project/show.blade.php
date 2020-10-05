@@ -48,7 +48,17 @@
             <h2 class="text-lg font-normal">General Notes</h2>
             {{--General Notes--}}
 
-            <textarea class="bg-white p-5 rounded-lg shadow w-full" style="height:200px">Lorem Ipsum</textarea>
+            <form method="POST" action="{{$project->path()}}">
+                @csrf
+                @method('PATCH')
+            <textarea
+            name="notes" 
+            class="bg-white p-5 rounded-lg shadow w-full"
+             placeholder="Anything that you want to make note of?"
+              style="height:200px">{{$project->notes}}</textarea>
+
+              <button type="submit" class="button">Save</button>
+            </form>
             </div>
     </div>
     <div class="lg:w-1/4 px-3">
