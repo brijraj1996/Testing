@@ -6,62 +6,65 @@
         <p class="text-grey text-lg font-normal">
            <a href="/projects"> My projects </a>/ {{$project->title}}
         </p>
-
-<a href="/projects/create" class="underline">Create new project</a>
+        <a href="{{$project->path().'/edit'}}" class="button">Edit project</a>
 </header>
 
 
 <main>
     <div class="lg:flex -mx-3">
-    
         <div class="lg:w-3/4 px-3 mb-6">
             <div class="mb-8">
-            <h2 class="text-lg font-normal mb-6">Tasks</h2>
+                <h2 class="text-lg font-normal mb-6">Tasks</h2>
            
             {{--Tasks--}}
-            @foreach($project->tasks as $task)
+        @foreach($project->tasks as $task)
             <div class="bg-white p-5 rounded-lg shadow mb-3">
-            <form method="POST" action= "{{$task->path()}}">
-                @method('PATCH')
-                @csrf
+                <form method="POST" action= "{{$task->path()}}">
+                    @method('PATCH')
+                    @csrf
 
-
-                <div class ="flex">
-                    
+                    <div class ="flex">   
                        <input name="body" value="{{$task->body}}" class="w-full">
                        <input name="completed" type="checkbox" onChange="this.form.submit()" {{$task->completed ? 'checked' : ''}}>
                     </div>
-            </form>
-        </div>
-            @endforeach
-            <div class="bg-white p-5 rounded-lg shadow mb-3">
+                </form>
+            </div>
+        @endforeach
+
+        <div class="bg-white p-5 rounded-lg shadow mb-3">
             
             <form action="{{$project->path() . '/tasks'}}" method="POST">
                 @csrf 
-                
                 <input placeholder="Begin adding tasks..." class="w-full" name="body">
             </form>
-
-            </div>
-
-            <div>
+        </div>
+    <div>
             <h2 class="text-lg font-normal">General Notes</h2>
             {{--General Notes--}}
 
             <form method="POST" action="{{$project->path()}}">
                 @csrf
                 @method('PATCH')
-            <textarea
-            name="notes" 
-            class="bg-white p-5 rounded-lg shadow w-full"
-             placeholder="Anything that you want to make note of?"
-              style="height:200px">{{$project->notes}}</textarea>
+                <textarea 
+                    name="notes" 
+                    class="bg-white p-5 rounded-lg shadow w-full"
+                    placeholder="Anything that you want to make note of?"
+                    style="height:200px">{{$project->notes}}
+                </textarea>
 
-              <button type="submit" class="button">Save</button>
+                <button type="submit" class="button">Save</button>
+
+                @if($errors->any()) 
+                <div class="field mt-6">
+                    @foreach($errors>all() as $error)
+                        <li class="text-sm text-red">{{$error}}</li>
+                    @endforeach
+                </div>
+            @endif
+
             </form>
-            </div>
     </div>
-    <div class="lg:w-1/4 px-3">
+        <div class="lg:w-1/4 px-3">
         @include('project.card')
         <div><a href="/projects">Go back</a></div> 
       </div>

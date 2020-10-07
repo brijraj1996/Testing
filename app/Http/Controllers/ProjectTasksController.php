@@ -10,11 +10,12 @@ class ProjectTasksController extends Controller
 {
     public function store(Project $project)
     {
-        if(auth()->user()!=($project->owner))
+        
+        if(auth()->user()->isNot($project->owner))
         {
             abort(403);
         }
-
+        
         request()->validate(['body' => 'required']);
 
         $project->addTask(request('body')); // we are passing body to the post request in the ProjectTasksTest
@@ -25,6 +26,11 @@ class ProjectTasksController extends Controller
 
     public function update(Project $project, Task $task)
     {
+        if(auth()->user()->isNot($project->owner))
+        {
+            abort(403);
+        }
+    
         $task->update([
            'body'=> request('body'),
            'completed'=> request()->has('completed')  
